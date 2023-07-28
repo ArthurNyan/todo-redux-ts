@@ -1,0 +1,41 @@
+@font-face {
+	font-family: 'Roboto';
+	src:
+		url('@/shared/assets/fonts/Roboto/static/Roboto-Regular.ttf') format('ttf');
+	font-weight: 400;
+	font-style: normal;
+	font-display: 'swap';
+}
+
+@font-face {
+	font-family: 'Overpass';
+	src:
+		url('@/shared/assets/fonts/Roboto/static/Roboto-Bold.ttf') format('woff');
+	font-weight: 700;
+	font-style: normal;
+	font-display: 'swap';
+}
+
+@font-face {
+	font-family: 'Overpass';
+	src:
+		url('@/shared/assets/fonts/Roboto/static/Roboto-Italic.ttf') format('ttf');
+	font-weight: 400;
+	font-style: italic;
+	font-display: 'swap';
+}
+
+@font-face {
+	font-family: 'Overpass';
+	src:
+		url('@/shared/assets/fonts/Roboto/static/Roboto-BoldItalic.ttf') format('ttf');
+	font-weight: 700;
+	font-style: italic;
+	font-display: 'swap';
+}
+
+body {
+	font-family: 'Roboto', 'Arial', sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+}

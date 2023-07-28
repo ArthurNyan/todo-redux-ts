@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider as ReactRouterProvider } from 'react-router-dom';
 import HomePage from '@/pages/HomePage';
-import AuthorizationPage from '@/pages/AuthorizationPage';
 
 const router = createBrowserRouter([
 	{
@@ -9,7 +8,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/registration',
-		Component: AuthorizationPage,
+		Component: HomePage,
 	},
 ]);
 
