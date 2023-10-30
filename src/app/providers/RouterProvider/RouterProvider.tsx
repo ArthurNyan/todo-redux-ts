@@ -6,10 +6,6 @@ const router = createBrowserRouter([
 		path: '/',
 		Component: HomePage,
 	},
-	{
-		path: '/registration',
-		Component: HomePage,
-	},
 ]);
 
 export const RouterProvider = () => {
