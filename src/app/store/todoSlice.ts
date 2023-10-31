@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { ITodo } from '@/shared/assets/lib/ITodo';
 
 const initialState = {
-    todos: <ITodo[]>[{ id: 1, body: 'First note', checked: false }, { id: 2, body: 'Second note', checked: false }]
+    todos: <ITodo[]>[{ id: '2023-10-31T21:48:50.293Z', body: 'First note', checked: false }, { id: '2023-10-31T21:50:17.736Z', body: 'Second note', checked: true }],
 };
 
 export const todoSlice = createSlice({
@@ -10,14 +10,17 @@ export const todoSlice = createSlice({
     initialState,
     reducers: {
         addTodo: (state, action) => {
-            state.todos.push(action.payload);
-        },
-        compliteToogle: (state, action) => {
-            state.todos[action.payload].checked = !state.todos[action.payload].checked;
+            state.todos.push({
+                body: action.payload.body, checked: false,
+                id: new Date().toISOString(),
+            });
         },
         removeTodo(state, action) {
             state.todos = state.todos.filter(todo => todo.id !== action.payload.id);
-        }
+        },
+        compliteToogle: (state, action) => {
+            state.todos[action.payload.id].checked = !state.todos[action.payload.id].checked;
+        },
     }
 });
 
