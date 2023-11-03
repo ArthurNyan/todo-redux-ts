@@ -23,7 +23,15 @@ export const todoSlice = createSlice({
             state.todos = state.todos.filter(todo => todo.id !== action.payload.id);
         },
         compliteToogle: (state, action) => {
-            state.todos[action.payload.id].checked = !state.todos[action.payload.id].checked;
+            const todo = state.todos.find((todo)=> todo.id === action.payload.id);
+            switch((todo)?.checked){
+                case false:
+                    todo.checked = true;
+                    break;
+                default:
+                    todo.checked = false;
+                    break;
+            }
         },
     }
 });
