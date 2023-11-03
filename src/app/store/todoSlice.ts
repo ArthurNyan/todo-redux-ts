@@ -15,7 +15,7 @@ export const todoSlice = createSlice({
         addTodo: (state, action) => {
             state.todos.push({
                 id: new Date().toISOString(),
-                body: action.payload.body, 
+                body: action.payload.body,
                 checked: false,
             });
         },
@@ -23,8 +23,8 @@ export const todoSlice = createSlice({
             state.todos = state.todos.filter(todo => todo.id !== action.payload.id);
         },
         compliteToogle: (state, action) => {
-            const todo = state.todos.find((todo)=> todo.id === action.payload.id);
-            switch((todo)?.checked){
+            const todo = state.todos.find((todo) => todo.id === action.payload.id);
+            if (todo) switch ((todo)?.checked) {
                 case false:
                     todo.checked = true;
                     break;
