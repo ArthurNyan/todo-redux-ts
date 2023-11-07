@@ -2,10 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { ITodo } from '@/shared/assets/lib/ITodo';
 
 const initialState = {
-    todos: <ITodo[]>[
-        { id: '2023-10-31T21:48:50.293Z', body: 'First note', checked: false },
-        { id: '2023-10-31T21:50:17.736Z', body: 'Second note', checked: true }
-    ],
+    todos: <ITodo[]>JSON.parse(localStorage.getItem('tasks') || '[{"id":"0","body":"Твоя первая заметка"}]'),
 };
 
 export const todoSlice = createSlice({
@@ -18,9 +15,11 @@ export const todoSlice = createSlice({
                 body: action.payload.body,
                 checked: false,
             });
+            localStorage.setItem('tasks', JSON.stringify(state.todos));
         },
         removeTodo(state, action) {
             state.todos = state.todos.filter(todo => todo.id !== action.payload.id);
+            localStorage.setItem('tasks', JSON.stringify(state.todos));
         },
         compliteToogle: (state, action) => {
             const todo = state.todos.find((todo) => todo.id === action.payload.id);
@@ -32,6 +31,7 @@ export const todoSlice = createSlice({
                     todo.checked = false;
                     break;
             }
+            localStorage.setItem('tasks', JSON.stringify(state.todos));
         },
     }
 });
