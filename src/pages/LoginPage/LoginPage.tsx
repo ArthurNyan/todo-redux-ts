@@ -2,20 +2,18 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { setUser } from '@/app/store/userSlice';
 import { useNavigate, Link } from 'react-router-dom';
 import { Copyright } from '@/features/Copyright/Copyright';
 
-export const Register = () => {
+export const LoginPage = () => {
     const dispatch = useDispatch();
     const auth = getAuth();
     const navigate = useNavigate();
@@ -23,7 +21,7 @@ export const Register = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        createUserWithEmailAndPassword(auth, `${data.get('email')}`, `${data.get('password')}`)
+        signInWithEmailAndPassword(auth, `${data.get('email')}`, `${data.get('password')}`)
             .then(({ user }) => {
                 dispatch(setUser({
                     email: user.email,
@@ -32,7 +30,7 @@ export const Register = () => {
                 }));
                 navigate('/');
             })
-            .catch(() => alert('Пользователь уже существует'));
+            .catch(() => alert('Неправильный логин или пароль'));
     };
 
     return (
@@ -54,33 +52,13 @@ export const Register = () => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component='h1' variant='h5'>
-                    Sign up
+                    Log in
                 </Typography>
                 <Box component='form' onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                autoComplete='given-name'
-                                name='firstName'
-                                required
-                                fullWidth
-                                id='firstName'
-                                label='First Name'
-                                autoFocus
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                id='lastName'
-                                label='Last Name'
-                                name='lastName'
-                                autoComplete='family-name'
-                            />
-                        </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                autoFocus
                                 required
                                 fullWidth
                                 id='email'
@@ -100,12 +78,6 @@ export const Register = () => {
                                 autoComplete='new-password'
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox value='allowExtraEmails' color='primary' />}
-                                label='I want to receive inspiration, marketing promotions and updates via email.'
-                            />
-                        </Grid>
                     </Grid>
                     <Button
                         type='submit'
@@ -117,8 +89,8 @@ export const Register = () => {
                     </Button>
                     <Grid container justifyContent='flex-end'>
                         <Grid item>
-                            <Link to='/login'>
-                                Already have an account? Sign in
+                            <Link to='/signup'>
+                                Don't have account? Sign up
                             </Link>
                         </Grid>
                     </Grid>
