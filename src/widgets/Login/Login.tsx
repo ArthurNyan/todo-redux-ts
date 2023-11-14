@@ -2,7 +2,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -11,7 +10,7 @@ import Container from '@mui/material/Container';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/app/store/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Copyright } from '@/features/Copyright/Copyright';
 
 export const Login = () => {
@@ -89,7 +88,7 @@ export const Login = () => {
                     </Button>
                     <Grid container justifyContent='flex-end'>
                         <Grid item>
-                            <Link href='/auth' variant='body2'>
+                            <Link to='/auth'>
                                 Don't have account? Sign up
                             </Link>
                         </Grid>

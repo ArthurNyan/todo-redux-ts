@@ -4,7 +4,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -13,7 +12,7 @@ import Container from '@mui/material/Container';
 import { useDispatch } from 'react-redux';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { setUser } from '@/app/store/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Copyright } from '@/features/Copyright/Copyright';
 
 export const Register = () => {
@@ -118,7 +117,7 @@ export const Register = () => {
                     </Button>
                     <Grid container justifyContent='flex-end'>
                         <Grid item>
-                            <Link href='/login' variant='body2'>
+                            <Link to='/login'>
                                 Already have an account? Sign in
                             </Link>
                         </Grid>
