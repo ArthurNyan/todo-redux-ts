@@ -12,7 +12,7 @@ export const userSlice = createSlice({
             state.user.email = action.payload.email;
             state.user.token = action.payload.token;
             state.user.id = action.payload.id;
-            localStorage.setItem('user', JSON.stringify(state));
+            localStorage.setItem('user', JSON.stringify(state.user));
         },
         removeUser(state) {
             state.user.email = null;
