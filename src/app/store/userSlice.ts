@@ -1,7 +1,8 @@
+import { IUser } from '@/shared/assets/lib/IUser';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    user: JSON.parse(localStorage.getItem('user') || '{ "email": null, "token": null, "id": null}'),
+    user: <IUser>JSON.parse(localStorage.getItem('user') || '{ "email": null, "token": null, "id": null}'),
 };
 
 export const userSlice = createSlice({
