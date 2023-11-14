@@ -10,28 +10,30 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
-function Copyright() {
-    return (
-        <Typography variant='body2' color='text.secondary' align='center' sx={{ mt: 5 }}>
-            {'Copyright © '}
-            <Link color='inherit' href='https://github.com/ArthurNyan'>
-                Aryan project
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+import { useDispatch } from 'react-redux';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { setUser } from '@/app/store/userSlice';
+import { useNavigate } from 'react-router-dom';
+import { Copyright } from '@/features/Copyright/Copyright';
 
 export const Register = () => {
+    const dispatch = useDispatch();
+    const auth = getAuth();
+    const navigate = useNavigate();
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        createUserWithEmailAndPassword(auth, `${data.get('email')}`, `${data.get('password')}`)
+            .then(({ user }) => {
+                dispatch(setUser({
+                    email: user.email,
+                    id: user.uid,
+                    token: user.refreshToken,
+                }));
+                navigate('/');
+            })
+            .catch(() => alert('Пользователь уже существует'));
     };
 
     return (
