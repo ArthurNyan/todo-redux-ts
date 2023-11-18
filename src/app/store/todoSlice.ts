@@ -1,8 +1,8 @@
+import { IUserNotes } from '@/shared/assets/lib/IUserNotes';
 import { createSlice } from '@reduxjs/toolkit';
-import { ITodo } from '@/shared/assets/lib/ITodo';
 
-const initialState = {
-    todos: <ITodo[]>JSON.parse(localStorage.getItem('tasks') || '[{"id":"0","body":"Твоя первая заметка"}]'),
+const initialState: IUserNotes = {
+    todos: JSON.parse(localStorage.getItem('tasks') || '[{"id":"0","body":"Твоя первая заметка"}]'),
 };
 
 export const todoSlice = createSlice({
