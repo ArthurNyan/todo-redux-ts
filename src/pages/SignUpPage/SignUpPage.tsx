@@ -14,13 +14,14 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { setUser } from '@/app/store/userSlice';
 import { useNavigate, Link } from 'react-router-dom';
 import { Copyright } from '@/features/Copyright/Copyright';
+import { FormEvent } from 'react';
 
 export const SignUpPage = () => {
     const dispatch = useDispatch();
     const auth = getAuth();
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         createUserWithEmailAndPassword(auth, `${data.get('email')}`, `${data.get('password')}`)

@@ -12,13 +12,18 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '@/app/store/userSlice';
 import { useNavigate, Link } from 'react-router-dom';
 import { Copyright } from '@/features/Copyright/Copyright';
+import { FormEvent, useCallback } from 'react';
+
+
+// Типизация эвентов
+
 
 export const LoginPage = () => {
     const dispatch = useDispatch();
     const auth = getAuth();
     const navigate = useNavigate();
-
-    const handleSubmit = (event) => {
+    
+    const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         signInWithEmailAndPassword(auth, `${data.get('email')}`, `${data.get('password')}`)
@@ -31,7 +36,7 @@ export const LoginPage = () => {
                 navigate('/');
             })
             .catch(() => alert('Неправильный логин или пароль'));
-    };
+    }, [auth, dispatch, navigate]);
 
     return (
         <Container component='main' maxWidth='sm'>
