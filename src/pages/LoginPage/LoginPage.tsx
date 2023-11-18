@@ -14,10 +14,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Copyright } from '@/features/Copyright/Copyright';
 import { FormEvent, useCallback } from 'react';
 
-
-// Типизация эвентов
-
-
 export const LoginPage = () => {
     const dispatch = useDispatch();
     const auth = getAuth();
