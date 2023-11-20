@@ -1,19 +1,19 @@
-import { Checkbox, Container, IconButton, InputBase, List, ListItem, ListItemButton, ListItemText, Paper, Typography } from '@mui/material';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/app/store/store';
-import { addTodo, compliteToogle, removeTodo } from '@/app/store/todoSlice';
-import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
+import { useAddTodoMutation, useGetNoSqlTodoQuery, usePatchTodoMutation, useRemoveTodoMutation } from '@/app/store/notesApi';
+import { Checkbox, Container, IconButton, InputBase, LinearProgress, List, ListItem, ListItemButton, ListItemText, Paper, Typography } from '@mui/material';
 import { ITodo } from '@/shared/assets/lib/ITodo';
 import { useEffect } from 'react';
-import { useAuth } from '@/shared/api/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/shared/api/useAuth';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import QueueOutlinedIcon from '@mui/icons-material/QueueOutlined';
 
 export const TodoApp = () => {
-    const todos = useSelector((state: RootState) => state.todo.todos);
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const auth = useAuth();
+    const { data, isLoading } = useGetNoSqlTodoQuery('lQGdlEmEzPewDhbygLcAPeEbVzi2');
+    const [deletePost] = useRemoveTodoMutation();
+    const [addTodo] = useAddTodoMutation();
+    const [patchTodo] = usePatchTodoMutation();
 
     useEffect(() => {
         auth.isAuth ? null : navigate('/auth');
@@ -21,35 +21,34 @@ export const TodoApp = () => {
 
     const newTodo = () => {
         const body = (document.getElementById('textFiled') as HTMLInputElement).value;
-        body && dispatch(addTodo({ body: body }));
+        addTodo({ userId: auth.id || 'Error', body: body, checked: false }).unwrap();
     };
 
-    const clicker = (todo: ITodo) => {
-        dispatch(compliteToogle(todo));
-    };
+    if (isLoading)
+        return <LinearProgress />;
 
     return <>
         <Container maxWidth='md'>
             <Typography variant='h2' component='h1' sx={{ textAlign: 'center', m: 16 }}>Todo list</Typography>
             <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                {todos.map((todo) => {
+                {data?.map((todo: ITodo) => {
                     return (
                         <ListItem
                             key={todo.id}
                             secondaryAction={
                                 <>
-                                    <IconButton aria-label='delete' onClick={() => dispatch(removeTodo(todo))} color='success'>
+                                    <IconButton aria-label='delete' onClick={() => deletePost(todo.id).unwrap()} color='success'>
                                         <DeleteOutlineIcon />
                                     </IconButton>
                                     <Checkbox
                                         edge='end'
-                                        onClick={() => clicker(todo)}
+                                        onClick={() => patchTodo({ checked: !todo.checked, id: todo.id }).unwrap()}
                                         checked={todo.checked}
                                     />
                                 </>
                             }
                             disablePadding>
-                            <ListItemButton onClick={() => dispatch(compliteToogle(todo))} >
+                            <ListItemButton onClick={() => patchTodo({ checked: !todo.checked, id: todo.id }).unwrap()} >
                                 <ListItemText sx={{ fontSize: '24px' }} >{todo.body}</ListItemText>
                             </ListItemButton>
                         </ListItem>
